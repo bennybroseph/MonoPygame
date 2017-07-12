@@ -1,10 +1,14 @@
-from pygame_object import *
-from component import *
+from pygame_object import PygameObject
+from component import Component
 
 class GameObject(PygameObject):
-    def __init__(self, name = "New GameObject"):
+    def __init__(self, tag = "", name = "New GameObject"):
+        assert isinstance(tag, str)
+
         PygameObject.__init__(self, name)
-        
+
+        self.tag = tag
+
         self._components = [Component] * 0
 
     def update(self):
@@ -14,6 +18,8 @@ class GameObject(PygameObject):
 
     def add_component(self, component):
         self._components.append(component)
+
+        return component
 
     def get_component(self, type):
         """

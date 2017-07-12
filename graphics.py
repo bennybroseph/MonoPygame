@@ -1,21 +1,37 @@
 import pygame
 
-from complex_types import *
+from renderer import Renderer
+from complex_types import Size, Color
 
 class Graphics(object):
-    size = Size(0, 0)
-
     screen = None
 
+    size = Size()
+    fillcolor = Color()
+
     @staticmethod
-    def init(newSize = Size(640, 460), caption = "Pygame"):
-        Graphics.size = newSize
+    def init(size = Size(640, 460),
+             caption = "Pygame",
+             fillcolor = Color(0, 0, 0)):
+        assert(size, Size)
+        assert(caption, str)
+        assert(fillcolor, Color)
+
+        Graphics.size = size
+        Graphics.fillcolor = fillcolor
 
         pygame.init()
-    
-        Graphics.screen = \
-            pygame.display.set_mode((int(Graphics.size.w), int(Graphics.size.h)))
+
+        Graphics.screen = pygame.display.set_mode((int(Graphics.size.w),
+                                                   int(Graphics.size.h)))
 
         pygame.display.set_caption(caption)
 
+    @staticmethod
+    def draw():
+        Graphics.screen.fill(Graphics.fillcolor.tuple)
+
+        Renderer._render()
+
+        pygame.display.update()
 

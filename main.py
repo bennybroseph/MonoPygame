@@ -3,24 +3,25 @@ import sys
 
 from pygame.locals import *
 
-from complex_types import *
-from graphics import *
+from graphics import Graphics
+from complex_types import  Vector2
 from pygame_object import *
 from game_object import *
 from component import *
 from collision import *
-from renderer import *
+from ui import *
 
 def main():
     Graphics.init(Size(1280, 720))
-    
-    bounds = Bounds()
-    print(bounds.extents)
+
+    clock = pygame.time.Clock()
 
     player = GameObject()
     player.add_component(LineRenderer(Vector2(0, 0), Vector2(10, 10)))
 
-    
+    fps = GameObject()
+    text = fps.add_component(Text())
+
     # game loop
     while True:
         # check for events
@@ -28,10 +29,13 @@ def main():
             if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
                 pygame.quit()
                 sys.exit()
-        
-        update()
 
-        draw()        
+        clock.tick(60)
+
+        update()
+        text.text = str(int(clock.get_fps()))
+
+        Graphics.draw()
 
 def update():
     Component._awake()
@@ -41,19 +45,5 @@ def update():
 
     Component._update()
     Component._late_update()
-
-def draw():
-    Graphics.screen.fill((0, 0, 0))
-
-    Renderer._render()
-    draw_circle(0, 0, 10)
-
-    pygame.display.update()
-
-def draw_circle(x, y, radius = 1.0, color = (255, 255, 255)):
-    pygame.draw.circle(Graphics.screen, 
-                       (255, 255, 255), 
-                       (int(x + (Graphics.size.w / 2)), int((Graphics.size.h / 2) - y)),
-                       radius)
 
 main()

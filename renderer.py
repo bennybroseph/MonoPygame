@@ -1,8 +1,8 @@
 import pygame
 
-from complex_types import *
-from graphics import *
-from component import *
+import graphics
+from complex_types import Bounds, Color, Vector2
+from component import Component
 
 class Renderer(Component):
     _renderers = []
@@ -13,10 +13,10 @@ class Renderer(Component):
             if renderer.enabled:
                 renderer.render()
 
-    def __init__(self, bounds = Bounds(), tag = "", name = "New Renderer"):
+    def __init__(self, bounds = Bounds(), name = "New Renderer"):
         assert isinstance(bounds, Bounds)
 
-        Component.__init__(self, tag, name)
+        Component.__init__(self, name)
 
         self.enabled = True
         self.bounds = bounds
@@ -27,13 +27,14 @@ class Renderer(Component):
         pass
 
 class PrimitiveRenderer(Renderer):
-    def __init__(self, 
-                 color = (255, 255, 255), 
-                 bounds = Bounds(), 
-                 tag = "", 
+    def __init__(self,
+                 color = Color(255, 255, 255),
+                 bounds = Bounds(),
                  name = "New PrimitiveRenderer"):
-        Renderer.__init__(self, bounds, tag, name)
-    
+        assert isinstance(color, Color)
+
+        Renderer.__init__(self, bounds, name)
+
         self.color = color
 
     def render(self):
@@ -41,21 +42,20 @@ class PrimitiveRenderer(Renderer):
         pass
 
 class LineRenderer(PrimitiveRenderer):
-    def __init__(self, 
+    def __init__(self,
                  min = Vector2(0, 0),
                  max = Vector2(1, 1),
-                 color = (255, 255, 255),
-                 tag = "", 
+                 color = Color(255, 255, 255),
                  name = "New LineRenderer"):
         assert isinstance(min, Vector2) and isinstance(max, Vector2)
 
-        PrimitiveRenderer.__init__(self, color, tag = tag, name = name)
+        PrimitiveRenderer.__init__(self, color, name = name)
 
         self.bounds.min = min
         self.bounds.max = max
 
     def render(self):
-        pygame.draw.line(Graphics.screen, 
-                         self.color, 
-                         (self.bounds.min.x, self.bounds.min.y),
-                         (self.bounds.max.x, self.bounds.max.y))
+        pygame.draw.line(graphics.Graphics.screen,
+                         self.color.tuple,
+                         self.bounds.min.tuple,
+                         self.bounds.max.tuple)

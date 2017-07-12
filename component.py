@@ -28,20 +28,24 @@ class Component(PygameObject):
         for component in Component._components:
             component.late_update()
 
-    def __init__(self, tag = "", name = "New Component"):
+    def __init__(self, name = "New Component"):
+
         PygameObject.__init__(self, name)
-        
+
         self._isAwake = False
         self._isStarted = False
 
-        self.tag = tag
-        self.gameObject = None 
-        
+        self.gameObject = None
+
         Component._components.append(self)
 
     @property
     def transform(self):
         return self.gameObject.transform
+
+    @property
+    def tag(self):
+        return self.gameObject.tag
 
     def awake(self):
         """Called when the component is created"""

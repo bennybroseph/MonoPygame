@@ -1,60 +1,7 @@
-import numbers
-
-class Vector2(object):
-    def __init__(self, x, y):
-        self.x = float(x)
-        self.y = float(y)
-
-    def __str__(self):
-        return "(" + str(self.x) + ", " + str(self.y) + ")"
-
-    def __eq__(self, other):
-        assert isinstance(other, Vector2)
-
-        return self.x == other.x and self.y == other.y
-
-    def __neg__(self):
-        return type(self)(-self.x, -self.y)
-
-    def __add__(self, other):
-        if isinstance(other, Vector2):
-            return type(self)(self.x + other.x, self.y + other.y)
-        
-        assert isinstance(other, numbers.Number)
-
-        return type(self)(self.x + float(other), self.y + float(other))
-    def __radd__(self, other):
-        return self + other
-    def __iadd__(self, other):
-        self = self + other
-
-    def __sub__(self, other):
-        return self + (-other)
-    def __sub__(self, other):
-        self = self - other
-
-    def __mul__(self, other):
-        assert(other, numbers.Number)
-
-        return type(self)(self.x * float(other), self.y * float(other))
-    def __imul__(self, other):
-        self = self * other
-
-    def __truediv__(self, other):
-        assert isinstance(other, numbers.Number)
-
-        return type(self)(self.x / float(other), self.y / float(other))
-    def __idiv__(self, other):
-        self = self / other
-
-    @staticmethod
-    def scale(a, b):
-        assert isinstance(a, Vector2) and isinstance(b, Vector2)
-
-        return type(a)(a.x * b.x, a.y * b.y)
+from vector import *
 
 class Size(Vector2):
-    def __init__(self, w, h):
+    def __init__(self, w = 0, h = 0):
         Vector2.__init__(self, w, h)
 
     @property
@@ -69,7 +16,65 @@ class Size(Vector2):
         return self.y
     @h.setter
     def h(self, value):
-        self.h = float(value)
+        self.y = float(value)
+
+class Color(Vector3):
+    def __init__(self, r = 255, g = 255, b = 255):
+        Vector3.__init__(self, r, g, b)
+
+    @property
+    def r(self):
+        return self.x
+    @r.setter
+    def r(self, value):
+        self.x = float(value)
+
+    @property
+    def g(self):
+        return self.y
+    @g.setter
+    def g(self, value):
+        self.y = float(value)
+
+    @property
+    def b(self):
+        return self.z
+    @b.setter
+    def b(self, value):
+        self.z = float(value)
+
+    @property
+    def hsl(self):
+        """Returns the r, g, and b values as hue, saturation, and brightness"""
+        hsl = self.nomalized
+
+        min_value = min(self.r, self.g, self.b)
+        max_value = max(self.r, self.g, self.b)
+        hsl.z = (min + max) / 2.0
+        #TODO: Finish this function
+
+    @property
+    def hex(self):
+        """Returns the r, g, and b values of the color into hexadecimal"""
+        hex_values = [str(int(self.r // 16)),
+                      str(int(self.r % 16)),
+                      str(int(self.g // 16)),
+                      str(int(self.g % 16)),
+                      str(int(self.b // 16)),
+                      str(int(self.b % 16))]
+
+        hex_letters = ["A", "B", "C", "D", "E", "F"]
+        result = "0x"
+        for i in range(0, len(hex_values)):
+            int_value = int(hex_values[i])
+            if int_value > 9:
+                hex_values[i] = hex_letters[int_value - 10]
+
+            result += hex_values[i]
+
+        result = int(result, 16)
+        result = hex(result)
+        return result
 
 class Bounds(object):
     def __init__(self, center = Vector2(0.0, 0.0), size = Size(1.0, 1.0)):
@@ -90,7 +95,7 @@ class Bounds(object):
 
     @property
     def min(self):
-        return Vector2(self.center.x - self.extents.w, 
+        return Vector2(self.center.x - self.extents.w,
                        self.center.y - self.extents.h)
     @min.setter
     def min(self, value):
@@ -101,7 +106,7 @@ class Bounds(object):
 
     @property
     def max(self):
-        return Vector2(self.center.x + self.extents.w, 
+        return Vector2(self.center.x + self.extents.w,
                        self.center.y + self.extents.h)
     @max.setter
     def max(self, value):
