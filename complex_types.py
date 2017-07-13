@@ -1,4 +1,4 @@
-from vector import *
+from vector import Vector2, Vector3
 
 class Size(Vector2):
     def __init__(self, w = 0, h = 0):

@@ -37,6 +37,9 @@
     <Compile Include="behaviour.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="matrix.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="pygame_object.py" />
     <Compile Include="renderer.py">
       <SubType>Code</SubType>

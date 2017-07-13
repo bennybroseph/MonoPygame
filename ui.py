@@ -1,6 +1,7 @@
+import pygame
 import numbers
 
-from renderer import *
+from graphics import Graphics, Renderer, Color
 
 class Text(Renderer):
     def __init__(self,
@@ -26,4 +27,4 @@ class Text(Renderer):
     def render(self):
         # render text
         label = self.font.render(self.text, 1, self.color.tuple)
-        graphics.Graphics.screen.blit(label, self.bounds.center.tuple)
+        Graphics.screen.blit(label, self.bounds.center.tuple)

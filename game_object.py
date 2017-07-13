@@ -22,9 +22,7 @@ class GameObject(PygameObject):
         return component
 
     def get_component(self, type):
-        """
-        Grabs a component by 'type'
-        """
+        """Grabs a component by 'type'"""
         for component in self._components:
             if isinstance(component, type):
                 return component

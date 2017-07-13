@@ -1,6 +1,7 @@
 import pygame
 
 import graphics
+
 from complex_types import Bounds, Color, Vector2
 from component import Component
 

@@ -1,7 +1,7 @@
 import pygame
 
-from renderer import Renderer
-from complex_types import Size, Color
+from renderer import Renderer, Color
+from complex_types import Size
 
 class Graphics(object):
     screen = None

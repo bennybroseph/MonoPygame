@@ -1,9 +1,9 @@
-from pygame_object import *
+from pygame_object import PygameObject
 
 class Component(PygameObject):
     _components = []
 
-    @staticmethod
+    @staticmethod 
     def _awake():
         for component in Component._components:
             if not component._isAwake:

@@ -4,10 +4,11 @@ import sys
 from pygame.locals import *
 
 from graphics import Graphics
+from renderer import LineRenderer
 from complex_types import  Vector2
 from pygame_object import *
 from game_object import *
-from component import *
+from component import Component
 from collision import *
 from ui import *
 
