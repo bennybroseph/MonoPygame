@@ -3,25 +3,24 @@ import sys
 
 from pygame.locals import *
 
-from graphics import Graphics
+from pygame_time import Time
+from graphics import Graphics, Size
 from renderer import LineRenderer
 from complex_types import  Vector2
-from pygame_object import *
-from game_object import *
+from game_object import GameObject, Transform
 from component import Component
-from collision import *
-from ui import *
+from ui import Text
+from matrix import Matrix
 
 def main():
     Graphics.init(Size(1280, 720))
+    Time.init()
 
-    clock = pygame.time.Clock()
-
-    player = GameObject()
-    player.add_component(LineRenderer(Vector2(0, 0), Vector2(10, 10)))
+    line = GameObject()
+    line.add_component(LineRenderer(Vector2(0, 0), Vector2(10, 10)))
 
     fps = GameObject()
-    text = fps.add_component(Text())
+    text = fps.add_component(Text)
 
     # game loop
     while True:
@@ -31,14 +30,15 @@ def main():
                 pygame.quit()
                 sys.exit()
 
-        clock.tick(60)
-
         update()
-        text.text = str(int(clock.get_fps()))
+        text.text = str(int(Time.time))
+        text.transform.position = text.transform.position + Vector2(1, 0)
 
         Graphics.draw()
 
 def update():
+    Time.update()
+
     Component._awake()
     Component._start()
 

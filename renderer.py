@@ -58,5 +58,5 @@ class LineRenderer(PrimitiveRenderer):
     def render(self):
         pygame.draw.line(graphics.Graphics.screen,
                          self.color.tuple,
-                         self.bounds.min.tuple,
-                         self.bounds.max.tuple)
+                         (self.bounds.min + self.transform.position).tuple,
+                         (self.bounds.max + self.transform.position).tuple)

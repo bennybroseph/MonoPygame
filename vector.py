@@ -61,6 +61,9 @@ class Vector2(object):
     @property
     def tuple(self):
         return (self.x, self.y)
+    @property
+    def list(self):
+        return [self.x, self.y]
 
     @staticmethod
     def scale(a, b):
@@ -137,6 +140,9 @@ class Vector3(object):
     @property
     def tuple(self):
         return (self.x, self.y, self.z)
+    @property
+    def list(self):
+        return [self.x, self.y, self.z]
 
     @staticmethod
     def scale(a, b):

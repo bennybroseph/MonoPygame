@@ -44,6 +44,9 @@
     <Compile Include="renderer.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="pygame_time.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="transform.py" />
     <Compile Include="ui.py">
       <SubType>Code</SubType>

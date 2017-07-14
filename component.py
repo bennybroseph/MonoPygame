@@ -3,7 +3,7 @@ from pygame_object import PygameObject
 class Component(PygameObject):
     _components = []
 
-    @staticmethod 
+    @staticmethod
     def _awake():
         for component in Component._components:
             if not component._isAwake:
@@ -62,3 +62,6 @@ class Component(PygameObject):
     def late_update(self):
         """Called after update"""
         pass
+
+    def __del__(self):
+        Component._components.remove(self)
