@@ -28,7 +28,7 @@ class Matrix(object):
                        self._matrix[index][1],
                        self._matrix[index][2])
     def __setitem__(self, index, value):
-        #assert isinstance(value, Vector3)
+        assert isinstance(value, list)
 
         self._matrix[index] = value
 

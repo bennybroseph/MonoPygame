@@ -29,7 +29,7 @@ class Renderer(Component):
 
 class PrimitiveRenderer(Renderer):
     def __init__(self,
-                 color = Color(255, 255, 255),
+                 color = Color(),
                  bounds = Bounds(),
                  name = "New PrimitiveRenderer"):
         assert isinstance(color, Color)
@@ -46,7 +46,8 @@ class LineRenderer(PrimitiveRenderer):
     def __init__(self,
                  min = Vector2(0, 0),
                  max = Vector2(1, 1),
-                 color = Color(255, 255, 255),
+                 width = 1,
+                 color = Color(),
                  name = "New LineRenderer"):
         assert isinstance(min, Vector2) and isinstance(max, Vector2)
 
@@ -55,8 +56,32 @@ class LineRenderer(PrimitiveRenderer):
         self.bounds.min = min
         self.bounds.max = max
 
+        self.width = width
+
     def render(self):
         pygame.draw.line(graphics.Graphics.screen,
                          self.color.tuple,
-                         (self.bounds.min + self.transform.position).tuple,
-                         (self.bounds.max + self.transform.position).tuple)
+                         self.bounds.min.tuple,
+                         self.bounds.max.tuple,
+                         self.width)
+
+class LinesRenderer(PrimitiveRenderer):
+    def __init__(self,
+                 lines = [Vector2(0, 0), Vector2(1, 1)],
+                 width = 1,
+                 color = Color(),
+                 name = "New LinesRenderer"):
+        assert isinstance(lines, list)
+        assert isinstance(lines[0], Vector2)
+
+        PrimitiveRenderer.__init__(self, color, name = name)
+
+        self.lines = lines
+        self.width = width
+
+    def render(self):
+        pygame.draw.lines(graphics.Graphics.screen,
+                          self.color.tuple,
+                          False,
+                          self.lines,
+                          self.width)

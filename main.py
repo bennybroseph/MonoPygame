@@ -31,6 +31,7 @@ def main():
                 sys.exit()
 
         update()
+
         text.text = str(int(Time.time))
         text.transform.position = text.transform.position + Vector2(1, 0)
 

@@ -37,12 +37,9 @@ class Text(Renderer):
 
         rect = rendered_text.get_rect()
 
-        rect.center = temp_rect.center
-
         position = self.bounds.center + self.transform.position
-        rect.x = position.x
-        rect.y = position.y
 
-        print(rect)
+        rect.center = (temp_rect.center[0] + position.x,
+                       temp_rect.center[1] + position.y)
 
         Graphics.screen.blit(rendered_text, rect)
