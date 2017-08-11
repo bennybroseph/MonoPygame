@@ -21,7 +21,7 @@ class GameObject(PygameObject):
         for component in self._components:
             component.update()
 
-    def add_component(self, component):
+    def add_component(self, component : Component):
         if isinstance(component, type):
             component = component()
 

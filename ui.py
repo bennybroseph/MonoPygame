@@ -32,6 +32,7 @@ class Text(Renderer):
 
         temp_rect = rendered_text.get_rect()
 
+        rendered_text = pygame.transform.smoothscale(rendered_text, (100, 100))
         rendered_text = pygame.transform.rotate(rendered_text,
                                                 math.cos(Time.time) * (180 / math.pi))
 
